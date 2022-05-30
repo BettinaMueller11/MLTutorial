@@ -25,7 +25,8 @@ model = LinearRegression()
 model.fit(X_train, Y_train)
 
 y_pred=model.predict(X_train)
-
+print(y_pred)
 
 # Save the model to disk
 filename = open('data/models/models.pickle','wb')
+pickle.dump(model, open('data/models/models.pickle', 'wb'))
