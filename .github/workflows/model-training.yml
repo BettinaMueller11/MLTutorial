@@ -16,6 +16,6 @@ jobs:
       - name: upload trained model
         with:
           name: my-artifact
-          path: data/models/model.pickle
+          path: data/models/models.pickle
 
 
