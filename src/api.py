@@ -2,12 +2,19 @@ import mimetypes
 from flask import Flask, Response, request
 import pandas as pd
 import os
+import pickle
 from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
 
 training_data = pd.read_csv(os.path.join('data', 'auto-mpg.csv'),sep=";")
+
+#Load model
+file_to_open = open('data/models/models.pickle', 'rb')
+
+trained_model = pickle.load(file_to_open)
+file_to_open.close()
 
 @app.route("/", methods=["GET"])
 def index():
@@ -22,3 +29,16 @@ def hello_world():
 @app.route("/training_data", methods=["GET"])
 def get_training_data():
     return Response(training_data.to_json(), mimetype="application/json")
+
+
+@app.route("/predict", methods=["GET"])
+def predict():
+    zylinder = request.args.get('zylinder')
+    ps = request.args.get('ps')
+    gewicht = request.args.get('gewicht')
+    beschleunigung = request.args.get('beschleunigung')
+    baujahr = request.args.get('baujahr')
+    prediction = trained_model.predict([[zylinder, ps, gewicht, beschleunigung, baujahr]])
+    print(prediction)
+    return ''
+
