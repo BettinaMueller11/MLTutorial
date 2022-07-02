@@ -15,8 +15,9 @@ jobs:
       - name: Train model
         run: pythons src/train.py
       - name: upload trained model
+        uses: actions/upload-artifact@v3
         with:
-          name: my-artifact
+          name: models.pickle
           path: data/models/models.pickle
 
 
