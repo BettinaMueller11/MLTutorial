@@ -38,6 +38,9 @@ def predict():
     gewicht = request.args.get('gewicht')
     beschleunigung = request.args.get('beschleunigung')
     baujahr = request.args.get('baujahr')
-    prediction = trained_model.predict([[zylinder, ps, gewicht, beschleunigung, baujahr]])
-    return {"result": prediction[0]}
 
+    if(zylinder and ps and gewicht and beschleunigung and baujahr):
+        prediction = trained_model.predict([[zylinder, ps, gewicht, beschleunigung, baujahr]])
+        return {"result": prediction[0]}
+
+    return Response('Please provide all necessary parameters to get a prediction: zylinder, ps, gewicht, beschleunigung, baujahr', mimetype='application/json')
